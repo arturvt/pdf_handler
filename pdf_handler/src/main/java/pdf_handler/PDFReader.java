@@ -1,5 +1,7 @@
 package pdf_handler;
-
+/**
+ * @author Artur Tenorio - arturvt@gmail.com
+ */
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
