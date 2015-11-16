@@ -1,6 +1,6 @@
 package pdf_handler;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.fail;
 
 import java.io.FileNotFoundException;
 import java.net.URL;
@@ -37,7 +37,7 @@ public class PDFReadertest {
 		reader.printPageInfo(1);
 		reader.printPageInfo(2);
 		reader.printPageInfo(262);
-		
 	}
+	
 
 }

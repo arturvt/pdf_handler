@@ -1,4 +1,5 @@
 package pdf_handler;
+import java.awt.Image;
 /**
  * @author Artur Tenorio - arturvt@gmail.com
  */
@@ -18,6 +19,29 @@ public class PDFReader {
 	
 	private String fileName;
 	private PDFFile pdfFile;
+	
+	
+	// Page proportion on A4 = 0,75
+	enum Sizes {
+		SMALL(692,910),
+		DEFAULT(910, 1213), 
+		HIGH(1213, 1617);
+		
+		private int width;
+		private int height;
+		
+		Sizes(int width, int heigth) {
+			this.width = width;
+			this.height = heigth;
+		}
+		
+		public int w() {
+			return width;
+		}
+		public int h() {
+			return height;
+		}
+	}
 	
 	public PDFReader(String fileName) throws FileNotFoundException {
 		
@@ -51,6 +75,11 @@ public class PDFReader {
 	public int getNumberOFPages() {
 		return this.pdfFile.getNumPages();
 	}
+	
+////	public Image getPageAsImage(int page) {
+//		return this.pdfFile.getPage(page).getImage(Sizes.DEFAULT.w(), Sizes.DEFAULT.h(), clip, observer);
+//		
+//	}
 	
 	public void printPageInfo(int i) {
 		PDFPage page = this.pdfFile.getPage(i);
