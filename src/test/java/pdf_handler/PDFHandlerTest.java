@@ -3,6 +3,7 @@ package pdf_handler;
 import static org.junit.Assert.*;
 
 import java.awt.FlowLayout;
+import java.awt.Image;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
@@ -40,12 +41,14 @@ public class PDFHandlerTest {
 	@Test
 	public void displayImage() {
 		JFrame frame = new JFrame("page");
-		frame.setSize(1280, 720);
+		frame.setSize(1280, 1000);
 		frame.getContentPane().setLayout(new FlowLayout());
 		try {
 //			frame.add(new JLabel(new ImageIcon(handler.getPageInfo(1, 300))));
 //			frame.add(new JLabel(new ImageIcon(handler.getPageInfo(3, 200))));
-			frame.add(new JLabel(new ImageIcon(handler.getPageInfo(4, 100))));
+			Image image = handler.getPageInfo(4, 100);
+			frame.add(new JLabel(new ImageIcon(image)));
+						
 //			frame.add(new JLabel(new ImageIcon(handler.getPageInfo(5, 500))));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
