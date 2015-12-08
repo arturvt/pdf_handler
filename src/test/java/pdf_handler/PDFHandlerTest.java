@@ -24,7 +24,7 @@ public class PDFHandlerTest extends BaseTest {
 		frame.setSize(1280, 1000);
 		frame.getContentPane().setLayout(new FlowLayout());
 		try {
-			Image image = handler.getPageInfo(4, 100);
+			Image image = handler.getPageImage(4, 100);
 			frame.add(new JLabel(new ImageIcon(image)));
 						
 		} catch (IOException e) {

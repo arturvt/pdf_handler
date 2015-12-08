@@ -1,11 +1,15 @@
 package pdf_handler;
 
+import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.LinkedList;
 import java.util.List;
-import java.util.logging.Logger;
+
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import org.apache.pdfbox.exceptions.COSVisitorException;
 import org.apache.pdfbox.exceptions.CryptographyException;
@@ -15,23 +19,33 @@ import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.encryption.AccessPermission;
 import org.apache.pdfbox.pdmodel.encryption.BadSecurityHandlerException;
 import org.apache.pdfbox.pdmodel.encryption.StandardProtectionPolicy;
+import org.apache.pdfbox.util.PDFImageWriter;
 
 public class PDFHandler {
 
+    private static final Logger logger = LogManager.getLogger(PDFHandler.class);
+	
 	private String fileName;
 	private PDDocumentInformation pdfInfo;
 	private PDDocument pdfDoc;
+	private List<PDPage> pdPages;
+	
+	private List<Image> bufferImages = new LinkedList<Image>();
 	
 	private static final int ENCRYPT_LENGTH = 128;
 	
 	public PDFHandler(String fileName) throws FileNotFoundException {
+		
+//		log4j.rootLogger.org.apache.pdfbox.pdmodel.font.PDFont=fatal;
+		
 		File file  = new File(fileName);
 		if (!file.isFile()) {
 			throw new FileNotFoundException("Please verify if the file exists.");
 		}
 		this.fileName = fileName;
 		
-	    Logger.getLogger("PDFHandler").info(()->"Reading file: " + this.fileName);
+	    logger.trace(()->"Reading file: " + this.fileName);
+	    logger.info("------- GEEKK");
 	    initFile(file);
 	}
 	
@@ -39,6 +53,7 @@ public class PDFHandler {
 		try {
 			this.pdfDoc = PDDocument.load(file);
 			this.pdfInfo = pdfDoc.getDocumentInformation();
+			this.pdPages = this.pdfDoc.getDocumentCatalog().getAllPages();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -72,13 +87,28 @@ public class PDFHandler {
 		}
 	}
 	
-	public BufferedImage getPageInfo(int page, int dpi) throws IOException {
-		List<PDPage> pdPages = this.pdfDoc.getDocumentCatalog().getAllPages();
+	public BufferedImage getPageImage(int page, int dpi) throws IOException {
 		return  pdPages.get(page).convertToImage(BufferedImage.TYPE_INT_RGB, dpi);		
 	}
 	
 	public boolean isEncrypted() {
 		return this.pdfDoc.isEncrypted();
+	}
+	
+	public void bufferPages() throws IOException {
+		for (int i = 0; i < this.pdfDoc.getNumberOfPages(); i++) {
+			this.bufferImages.add(getPageImage(i, 96));
+		}
+		
+		System.out.println("Bufferized");
+	}
+	
+	public void generateThumbnails() throws IOException {
+		PDFImageWriter writer = new PDFImageWriter();
+		String imageFormat = "png";
+		String password = "";
+		
+		writer.writeImage(this.pdfDoc, imageFormat, password, 17, 25, "thumb", BufferedImage.TYPE_INT_RGB, 20);
 	}
 	
 	
@@ -110,4 +140,7 @@ public class PDFHandler {
 		  
 	}
 	
+	public void closeDoc() throws IOException {
+		this.pdfDoc.close();
+	}
 }
