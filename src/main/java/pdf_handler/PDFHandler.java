@@ -30,8 +30,6 @@ public class PDFHandler {
 	private PDDocument pdfDoc;
 	private List<PDPage> pdPages;
 	
-	private List<Image> bufferImages = new LinkedList<Image>();
-	
 	private static final int ENCRYPT_LENGTH = 128;
 	
 	public PDFHandler(String fileName) throws FileNotFoundException {
@@ -54,6 +52,7 @@ public class PDFHandler {
 			this.pdfDoc = PDDocument.load(file);
 			this.pdfInfo = pdfDoc.getDocumentInformation();
 			this.pdPages = this.pdfDoc.getDocumentCatalog().getAllPages();
+			System.out.println("Total pages loaded -> "+ this.pdPages.size());
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -95,19 +94,10 @@ public class PDFHandler {
 		return this.pdfDoc.isEncrypted();
 	}
 	
-	public void bufferPages() throws IOException {
-		for (int i = 0; i < this.pdfDoc.getNumberOfPages(); i++) {
-			this.bufferImages.add(getPageImage(i, 96));
-		}
-		
-		System.out.println("Bufferized");
-	}
-	
 	public void generateThumbnails() throws IOException {
 		PDFImageWriter writer = new PDFImageWriter();
 		String imageFormat = "png";
 		String password = "";
-		
 		writer.writeImage(this.pdfDoc, imageFormat, password, 17, 25, "thumb", BufferedImage.TYPE_INT_RGB, 20);
 	}
 	
