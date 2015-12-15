@@ -1,4 +1,4 @@
-package pdf_handler;
+package br.com.pdf_reader.core;
 
 import java.awt.Image;
 import java.awt.image.BufferedImage;
@@ -127,7 +127,18 @@ public class PDFHandler {
 		} else {
 			System.out.println("PDF is encrypted");
 		}
-		  
+	}
+	
+	public String getTitle() {
+		return this.pdfInfo.getTitle();
+	}
+	
+	public String getAuthor() {
+		return this.pdfInfo.getAuthor();
+	}
+	
+	public int getQntPages() {
+		return this.pdfDoc.getNumberOfPages();
 	}
 	
 	public void closeDoc() throws IOException {

@@ -9,6 +9,8 @@ import java.net.URL;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 
+import br.com.pdf_reader.core.PDFHandler;
+
 public abstract class BaseTest {
 	
 	protected static PDFHandler handler;
