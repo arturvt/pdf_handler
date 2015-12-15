@@ -1,14 +1,14 @@
 package br.com.pdf_reader.core;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Main {
 	
-	private static final Logger logger = LogManager.getLogger("HelloWorld");
+	private final static Logger LOGGER = Logger.getLogger(Main.class.getName());
 
 	public static void main(String[] args) {
-		logger.info("aaaa");
-		
+		LOGGER.setLevel(Level.INFO);
+		LOGGER.info("Starting PDF Handler Lib");
 	}
 }

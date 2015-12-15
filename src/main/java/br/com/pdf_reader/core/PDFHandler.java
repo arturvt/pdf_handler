@@ -4,6 +4,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.logging.Logger;
 
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDDocumentInformation;
@@ -14,6 +15,8 @@ import org.apache.pdfbox.rendering.ImageType;
 import org.apache.pdfbox.rendering.PDFRenderer;
 
 public class PDFHandler {
+	
+	private final static Logger LOGGER = Logger.getLogger(PDFHandler.class.getName());
 
 	private PDDocumentInformation pdfInfo;
 	private PDDocument pdfDoc;
@@ -40,7 +43,7 @@ public class PDFHandler {
 			this.pdfDoc = PDDocument.load(file, password);
 			this.pdfInfo = pdfDoc.getDocumentInformation();
 			this.pdPages = this.pdfDoc.getDocumentCatalog().getPages();
-			System.out.println("Total pages loaded -> " + this.pdPages.getCount());
+			LOGGER.info("Total pages loaded -> " + this.pdPages.getCount());
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
