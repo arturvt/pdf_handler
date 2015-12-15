@@ -1,11 +1,11 @@
 package pdf_handler;
 
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.*;
 
 import java.io.File;
 import java.io.IOException;
 
-import org.apache.pdfbox.exceptions.CryptographyException;
 import org.junit.AfterClass;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
@@ -29,11 +29,10 @@ public class PDFHandlerEncryptTest extends BaseTest {
 	}
 	
 	@Test
-	public void test02Dencrypt() throws IOException, CryptographyException {	
-		PDFHandler toDecrypt = new PDFHandler(sourceName);
+	public void test02openEncrypted() throws IOException {	
+		PDFHandler toDecrypt = new PDFHandler(sourceName, ownerPass);
 		assertTrue(toDecrypt.isEncrypted());
-		toDecrypt.decrypt(ownerPass);
-		assertFalse(toDecrypt.isEncrypted());
+		assertNotNull(toDecrypt.getAuthor());
 		
 	}
 	
