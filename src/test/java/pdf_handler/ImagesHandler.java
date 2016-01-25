@@ -17,6 +17,7 @@ public class ImagesHandler extends BaseTest{
 	public void generateDefaultSize() throws IOException {
 		BufferedImage img = handler.getPageImage(4, 160);
 		File target = new File("img_04.png");
+		ImageIO.scanForPlugins();
 		ImageIO.write(img, "png", target);
 	}
 

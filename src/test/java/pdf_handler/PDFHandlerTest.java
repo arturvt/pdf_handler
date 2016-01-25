@@ -4,6 +4,7 @@ import java.awt.FlowLayout;
 import java.awt.Image;
 import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -23,8 +24,10 @@ public class PDFHandlerTest extends BaseTest {
 		JFrame frame = new JFrame("page");
 		frame.setSize(1280, 1000);
 		frame.getContentPane().setLayout(new FlowLayout());
+		
 		try {
-			Image image = handler.getPageImage(4, 96);
+			Image image = handler.getPageImage(8, 96);
+//			Image image = handler.getPageImage(4);
 			frame.add(new JLabel(new ImageIcon(image)));
 						
 		} catch (IOException e) {

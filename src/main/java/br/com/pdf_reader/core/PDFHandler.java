@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.logging.Logger;
 
+import org.apache.pdfbox.cos.COSName;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDDocumentInformation;
 import org.apache.pdfbox.pdmodel.PDPageTree;
@@ -76,6 +77,13 @@ public class PDFHandler {
 	}
 
 	public BufferedImage getPageImage(int page, int dpi) throws IOException {
+//		for (COSName n: this.pdPages.get(0).getResources().getXObjectNames()) {
+//			System.out.println(n);
+//			this.pdPages.get(0).getResources().getXObject(n).getCOSStream();
+//			
+//		}
+		
+		
 		return new PDFRenderer(this.pdfDoc).renderImageWithDPI(page, dpi, ImageType.RGB);
 	}
 

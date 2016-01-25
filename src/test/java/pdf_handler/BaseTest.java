@@ -27,7 +27,7 @@ public abstract class BaseTest {
 	@BeforeClass
 	public static void prepareTest() {
 		try {
-			handler = new PDFHandler(getFileFromResource("pdf_original.pdf"));
+			handler = new PDFHandler(getFileFromResource("pdf_other_format.pdf"));
 		} catch (FileNotFoundException e) {
 			fail(e.getMessage());
 		}
